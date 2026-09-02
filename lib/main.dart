@@ -41,12 +41,20 @@ class AgendamentoEventoTela extends StatefulWidget{
     static const double _convidadosPadrao = 50.0;
     static const Visibilidade _visibilidadePadrao = .private;
 
+    static const Map<String, bool> _servicosPadrao = {
+      'Buffet': false,
+      'Fotógrafo': false,
+      'Decoração': false,
+      'DJ': false,
+    };
+
     // 2. Variáveis de Estado
     late DateTime _dataSelecionada;
     late TimeOfDay _horarioSelecionado;
     late String _tipoEventoSelecionado;
     late double _quantidadeConvidados;
     late Visibilidade _visibilidadeSelecionada;
+    
 
     @override
     void initState() {
