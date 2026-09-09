@@ -54,6 +54,7 @@ class AgendamentoEventoTela extends StatefulWidget{
     late String _tipoEventoSelecionado;
     late double _quantidadeConvidados;
     late Visibilidade _visibilidadeSelecionada;
+    late Map<String, bool> _servicosSelecionados;
     
 
     @override
@@ -70,6 +71,7 @@ class AgendamentoEventoTela extends StatefulWidget{
         _tipoEventoSelecionado = _tipoPadrao;
         _quantidadeConvidados = _convidadosPadrao;
         _visibilidadeSelecionada = _visibilidadePadrao;
+        _servicosSelecionados = Map<String, bool>.from(_servicosPadrao);
       });
       print('[DEBUG] Formulario resetado para os valores padrao.');
     }
@@ -85,6 +87,7 @@ class AgendamentoEventoTela extends StatefulWidget{
       print('Tipo de Evento: $_tipoEventoSelecionado');
       print('Estimativa de Convidados: ${_quantidadeConvidados.round()}');
       print('Visibilidade: $_visibilidadeSelecionada');
+      print('Serviços Adicionais: $_servicosSelecionados');
       print("========================================");
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -218,7 +221,7 @@ class AgendamentoEventoTela extends StatefulWidget{
                 value: _quantidadeConvidados,  
                 min: 10,
                 max: 500,
-                divisions: 490,
+                divisions: 500,
                 label: _quantidadeConvidados.round().toString(),
                 onChanged: (novoValor) {
                   setState(() {
@@ -264,6 +267,32 @@ class AgendamentoEventoTela extends StatefulWidget{
                     ),
                   ],
                 ),
+               ),
+               const Divider(height: 32),
+
+               // --- 6. Checkbox ---
+               Text(  
+                'Serviços Adicionais',
+                style: Theme.of(context).textTheme.titleMedium
+               ),
+               Column(
+                children: _servicosSelecionados.keys.map((servico)
+                {
+                  return CheckboxListTile(  
+                    dense: true,
+                    title: Text(servico),
+                    value: _servicosSelecionados[servico],
+                    onChanged: (bool? marcado) {
+                      setState(() {  
+                        _servicosSelecionados[servico] = marcado ?? false;
+                      });
+                      print(  
+                        '[DEBUG - Checkbox] Serviço "$servico" alterado para: $marcado',
+                      );
+                    },
+                  );
+                                
+                }).toList(),
                ),
                const Divider(height: 32),
             ],
